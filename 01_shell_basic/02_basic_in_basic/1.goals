@@ -2,18 +2,18 @@
 给出一个命令名字，能够查找它的帮助信息
 掌握以下基础命令的基本使用：
     cd          <-- change directory, 切换目录
-    pwd         <-- print working directory，打印出当前工作目录（练习三）
-    ls          <-- list, 列出目录的内容，或者文件的信息(-ld) （练习五）
+    pwd         <-- print working directory，打印出当前工作目录
+    ls          <-- list, 列出目录的内容，或者文件的信息(-ld)
     mkdir       <-- make directory, 创建目录
     rmdir       <-- remove directory, 删除空目录
     du          <-- disk usage, 查看目录占用的存储空间
     df          <-- 查看已经挂载的文件系统的空间使用情况
     fdisk       <-- 查看分区表，或者修改分区表
-    touch       <-- 创建空文件，修改文件的时间戳（练习四）
+    touch       <-- 创建空文件，修改文件的时间戳
     cp          <-- copy 复制文件
     mv          <-- move 移动文件，给文件改名
     rm          <-- remove 删除文件，或者目录
-    ln          <-- 创建链接（练习七）
+    ln          <-- 创建链接
     cat         <-- 显示文件的所有内容
     head        <-- 显示文件的头部
     tail        <-- 显示文件的尾部
