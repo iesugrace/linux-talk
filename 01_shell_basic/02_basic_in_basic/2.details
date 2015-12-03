@@ -1,0 +1,327 @@
+命令的语法
+    命令名 [命令的参数]
+
+1. 通常第一个字符串用来表示命令的名字（并非总是这样，但暂时先这样认为）
+2. 命令名后面可能带有一系列的参数，这些参数的表示方法有几种：
+    2.1 以一个连字符号开头
+    2.2 以两个连字符号开头
+    2.3 不以连字符号开头的其它字符串
+
+例子：
+/bin/ls       <-- 用绝对路径表示命令名
+bin/ls        <-- 用相对路径表示命令名
+ls            <-- 直接使用命令名字（不包含斜杠），这是最常用的方法
+
+
+
+head -c 512 /dev/sda
+head                <-- 命令名
+-c                  <-- 命令的选项(Option)
+512                 <-- 选项-c 的参数(Argument)
+-c, 512, /dev/sda 这三个字符串都属于命令行参数(command line arguments)
+
+
+
+
+PATH 变量
+当用不带斜杠的名字来表示命令名时，视情况，可能需要一个名叫PATH的变量的支持。
+echo $PATH          <-- 显示PATH变量的内容
+gedit ~/.bashrc     <-- 通常PATH变量是在配置文件~/.bashrc 中设置的
+. ~/.bashrc         <-- 读入配置文件，使刚修改的变量在当前shell生效
+
+
+
+命令的別名
+命令的別名，顾名思义，就是可以通过別的名字来执行命令。通常用于简化命令的输入，或者为命令增加一些参数，或者是单纯地为命令添加多个访问名称。
+alias cp mv rm                              <-- 查看cp, mv, rm这三个命令是不是別名
+unalias cp                                  <-- 删除别名cp
+alias cdyum='cd /var/www/html/yum/rh63'     <-- 简化输入
+alias rm='rm -i'                            <-- 为命令增加参数
+alias vi='/usr/bin/vim'                     <-- 为命令添加多个访问名称
+alias dir='/bin/ls'                         <-- 为命令添加多个访问名称
+gedit ~/.bashrc                             <-- 通常別名是在配置文件~/.bashrc 中设置的
+
+
+
+查找命令的帮助信息
+type, whatis, -h/--help, man （拓展：用info、互联网来查找命令的帮助信息)
+type -a ls
+    1. alias        <-- 別名
+    2. keyword      <-- shell 的关键字（常用于shell脚本）
+    3. function     <-- shell 函数
+    4. builtin      <-- shell 的内置命令
+    5. file         <-- 外部命令（也即文件）
+
+对于外部命令，通常可以用以下方法查询其帮助信息：
+man <命令名>          <-- 查该命令的man文档
+<命令名> --help       <-- 查该命令自带的帮助信息
+<命令名> -h           <-- 查该命令自带的帮助信息
+
+对于内置命令和shell关键字，通常可以用以下方法查询其帮助信息：
+help <NAME>
+
+以上各种获取命令帮助信息的方法，并非适用于所有的命令，不过大多数的命令都适用，如果用以上方法都找不到有用的信息，可以尝试其他方法，比如上网搜索，请教別人。
+
+
+
+
+
+
+
+基础命令的基本使用
+
+shutdown
+关机或者重启
+    shutdown -r now     <-- 立即重启系统
+    shutdown -h now     <-- 立即关闭系统
+    shutdown -h +3      <-- 3分钟后关闭系统
+    shutdown -h 20:00   <-- 20:00的时候关闭系统
+
+
+exit
+退出当前终端（也即登出，注销）
+
+
+cd
+change directory, 改变当前的工作目录（也即切换目录，进入目录）
+    cd ~                <-- 进入（回到）家目录
+    cd                  <-- cd 命令不带参数，等同于回到家目录
+    cd /usr             <-- 进入目录 /usr 中
+    cd ..               <-- 进入（退到）上一层目录
+    cd bin              <-- 进入当前目录下的bin 目录
+    cd -                <-- 进入（回到）前一个目录，可用于在两个目录之间快速切换
+    cd -P /etc/init.d   <-- 参数 -P 代表使用物理的目录结构，而非符号链接，可用命令pwd来查看效果
+
+
+pwd
+print working directory, 打印出当前的工作目录
+    pwd                 <-- 通常是不带参数，直接使用
+    pwd -P              <-- 参数 -P 代表打印物理的目录结构，而非符号链接。参考命令 cd -P
+
+
+ls
+list, 列出目录的内容，或者列出文件的信息，默认按照文件名排序。如果不提供目标参数，则列出当前目录的内容。
+    ls                  <-- 简单列出当前目录下的所有文件和目录（隐藏的文件和目录除外）
+    ls -l               <-- 显示目录或者文件的详细信息，这个是最常用的参数之一。
+    ls -A               <-- 显示隐藏的文件和目录
+    ls -t               <-- 按时间排序
+    ls -S               <-- 按大小排序
+    ls -X               <-- 按扩展名排序
+    ls -r               <-- 反过来排序
+    ls -1               <-- 一行显示一个结果
+    ls -lh              <-- 用人类易读的格式显示大小信息
+    ls -x               <-- 逐行显示，而非默认的逐列显示
+    ls -l /bin/bash     <-- 提供了目标参数，这里提供的是文件，所以列出该文件的信息
+    ls -l /             <-- 提供了目标参数，这里提供的是目录，所以列出该目录的内容
+    ls -ld /            <-- -d 选项表示列出目录本身的信息，而非目录的内容
+    ls -l /bin/cp /bin/mv /bin/rm /home  <-- 可以同时列出多个目标
+
+
+ls -l 的输出中，最左边的文件类型，常见的有：
+-           <-- 普通文件（regular file, 常规文件）
+d           <-- 目录(directory)
+l           <-- 符号连接(link)
+b           <-- 块设备(block)
+c           <-- 字符设备(character)
+s           <-- socket
+p           <-- named pipe
+
+
+UNIX 时间戳
+UNIX 系统记录文件的三种时间：最近访问时间，最近修改时间，最近状态改变时间
++--------------------+-----------------------------+----------------+----------------+
+|       名称         |       描述                  |  触发程序例子  |   ls 相关选项  |
++--------------------+-----------------------------+----------------+----------------+
+|  最近访问时间      |  文件数据的最近访问时间     |  cat, head     |       -u       |
+|  最近修改时间      |  文件数据的最近修改时间     |  vi, sed -i    |     default    |
+|  最近状态改变时间  |  文件i-node 的最近修改时间  |  chmod, chown  |       -c       |
++--------------------+-----------------------------+----------------+----------------+
+
+
+
+
+mkdir
+make directory, 创建目录
+    mkdir /tmp/d1           <-- 创建目录 /tmp/d1, 如果父目录/tmp 不存在就报错
+                                如果目标/tmp/d1 已经存在，也报错。
+    mkdir d2                <-- 在当前目录下创建目录 d2
+    mkdir -p /tmp/d3/d4/d5  <-- 创建目录/tmp/d3/d4/d5, 如果父目录不存在，就自动创建父目录
+                                如果目标/tmp/d3/d4/d5 已经存在，不报错。
+    mkdir -pv /tmp/d3/d4/d5 <-- 选项-v 表示为每一个创建的目录显示信息。当目标存在时这个选项很有用。
+[root@rhel6 ~]# mkdir -pv /tmp/d3/d4/d5
+mkdir: created directory `/tmp/d3'
+mkdir: created directory `/tmp/d3/d4'
+mkdir: created directory `/tmp/d3/d4/d5'
+
+
+rmdir
+remove directory, 删除空的目录。
+[root@rhel6 ~]# rmdir /tmp/d3/d4        <-- d4 下面还有一个目录d5，属于非空，所以不能删除
+rmdir: failed to remove `/tmp/d3/d4': Directory not empty
+[root@rhel6 ~]# rmdir /tmp/d3/d4/d5     <-- d5 是空的，可以删除
+[root@rhel6 ~]# 
+
+删除非空目录使用下面的命令
+rm -rf d1                <-- 删除目录 d1 及里面的所有内容
+
+
+du
+disk space usage of file and directory, 文件或目录所佔用的磁盘空间
+
+du -sh                  <-- 窗前目录所佔的空间
+du -sh /var/www/html    <-- /var/www/html 所佔的空间
+
+
+df
+disk space usage of file system, 文件系统的空间使用状况
+
+列出所有已掛载的文件系统的空间使用状况
+[root@rhel6 ~]# df 
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/sda1              7224824    933124   5924700  14% /
+tmpfs                   251284      4524    246760   2% /dev/shm
+/dev/sr0               3592530   3592530         0 100% /yum
+
+列出/tmp 目录所在的文件系统的空间使用状况。这个功能非常实用。
+[root@rhel6 ~]# df /tmp
+Filesystem           1K-blocks      Used Available Use% Mounted on
+/dev/sda1              7224824    933124   5924700  14% /
+
+
+fdisk
+该命令可用于对磁盘进行分区，也可用于显示磁盘的分区
+
+显示磁盘的分区。本例中，磁盘/dev/sda 有两个分区。
+[root@rhel6 ~]# fdisk -l
+
+Disk /dev/sda: 8589 MB, 8589934592 bytes
+255 heads, 63 sectors/track, 1044 cylinders
+Units = cylinders of 16065 * 512 = 8225280 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disk identifier: 0x0005e32f
+
+   Device Boot      Start         End      Blocks   Id  System
+/dev/sda1   *           1         914     7340032   83  Linux
+/dev/sda2             914        1045     1047552   82  Linux swap / Solaris
+
+
+touch
+可用于创建空文件，也可用于修改文件的时间戳
+
+创建空文件
+[czl@lab ~]# touch newfile
+[czl@lab ~]# ls -l newfile
+-rw-r--r-- 1 root root 0 Jun  6 21:42 newfile
+
+修改文件的访问时间和修改时间
+[czl@lab ~]$ touch -d "2013-01-01 12:00" file1
+[czl@lab ~]$ ls --full-time file1
+-rw-rw-r-- 1 czl czl 0 2013-01-01 12:00:00.000000000 +0800 file1
+
+修改文件的访问时间
+[czl@lab ~]$ touch -a -d "2013-01-01 12:00" file1
+[czl@lab ~]$ ls -u --full-time file1
+-rw-rw-r-- 1 czl czl 0 2013-01-01 12:00:00.000000000 +0800 file1
+
+修改文件的修改时间
+[czl@lab ~]$ touch -m -d "2013-01-01 12:00" file1
+[czl@lab ~]$ ls --full-time file1
+-rw-rw-r-- 1 czl czl 0 2013-01-01 12:00:00.000000000 +0800 file1
+
+参照文件file2 修改文件file1 的时间戳
+[czl@lab ~]$ touch -r file2 file1
+[czl@lab ~]$ ls --full-time file*
+-rw-rw-r-- 1 czl czl 0 2014-05-05 11:30:54.575630736 +0800 file1
+-rw-rw-r-- 1 czl czl 6 2014-05-05 11:30:54.575630736 +0800 file2
+
+
+cp
+复制命令
+    cp f1 f2                <-- 把文件f1 复制一份，新文件名为 f2
+    cp f1 d1/               <-- 把文件f1 复制到目录 d1 下，新文件名和旧文件名相同
+    cp f1 d1/f2             <-- 把文件f1 复制到目录 d1 下，新文件名为f2
+    cp f1 f2 f3 /tmp/d1/    <-- 把多个文件复制到同一个目录中，这种情况下新文件的名字只能和旧文件相同
+
+
+mv
+移动（改名）命令
+    mv f1 f2                <-- 把文件f1 改名为 f2 （可以想像成在当前目录下移动）
+    mv f1 d1/               <-- 把文件f1 移动到目录 d1 下，文件名不变
+    mv f1 d1/f2             <-- 把文件f1 移动到目录 d1 下，文件名改成 f2
+    mv f1 f2 f3 /tmp/d1/    <-- 把多个文件移动到同一个目录中，这种情况下不能改变文件名
+
+
+rm
+删除命令
+    rm f1                   <-- 删除文件 f1
+    rm f1 f2 f3             <-- 删除多个文件
+    rm -r d1                <-- 删除目录及目录里面的所有内容，必须提供 -r选项
+    rm -rf d1               <-- 删除目录及目录里面的所有内容，不提示用户确认
+
+
+以上三个命令cp, mv, rm 属于比较危险的命令，对于cp 和 mv，默认会把已存在的文件覆盖掉，rm 命令默认不会提示用户确认，所以使用的时候要相当小心。可以利用前面学过的命令別名功能，为这三个命令设置別名，加上-i 选项。请通过man文档查看-i 选项的意思。-f 选项和 -i 选项是互斥的，如果同时使用了这两个选项，那么程序究竟是提示用户确认，还是不提示呢？请自行测试。
+
+
+
+ln
+link, 创建链接。链接分为硬链接和符号链接，符号链接类似於Windows 下的快捷方式，硬链接和源文件指向文件系统上同一个文件。
+    ln -s [目标] [源]       <-- -s 选项代表创建符号链接 (symbolic link)
+    ln [目标] [源]          <-- 没有 -s选项代表创建的是硬链接
+
+创建软链接
+[root@lab bin]# ln -sv bash bash2
+`bash2' -> `bash'
+
+思考：
+符号链接文件的保存的内容是什么？
+
+
+创建硬链接
+[root@lab bin]# ln bash hbash
+
+
+创建连接的时候，指定目标时，有两种方式：
+1. 绝对路径
+2. 相对路径（相对于连接文件所在的目录）
+
+1. 如果使用的是绝对路径，那么目标是固定的，所以连接文件可以移动到任何地方
+2. 如果使用的是相对路径，那么链接文件和目标之间的相对位置是固定的，所以同时移动目标和链接文件并保证两者的相对位置不变，则它们也能移动到任何地方
+
+
+
+
+
+cat
+concatinate，把文件的内容按顺序连接起来，输出到标準输出。目前，只需要简单理解成显示文件的内容即可。
+    cat f1          <-- 显示文件 f1 的内容到屏幕上
+    cat -n f1       <-- 显示文件的内容，并且加上行号
+    cat -A f1       <-- 打印出一些不可见的字符和位置标记
+
+
+head
+读取文件的头部
+    head -n 3 /etc/passwd               <-- 读取文件/etc/passwd 的前面三行
+    head -c 3 /etc/passwd               <-- 读取文件/etc/passwd 的前面三个字节 
+    head -c 10m /dev/zero > f1          <-- 创建一个10M的文件
+
+
+tail
+读取文件的尾部
+    tail -n 3 /etc/passwd               <-- 读取文件/etc/passwd 的后面三行
+    tail -c 3 /etc/passwd               <-- 读取文件/etc/passwd 的后面三个字节 
+    tail -n +28 /etc/passwd             <-- 读取文件中从第28行开始直到结尾的所有行
+    tail -f /etc/passwd                 <-- 跟踪文件尾部内容的变化，常用来观察日志文件的变化，非常实用
+
+
+less
+less命令用来分屏显示内容，常用的命令按键如下
+    f           <-- 向下翻一屏
+    b           <-- 向上翻一屏
+    j           <-- 向下移动一行
+    k           <-- 向上移动一行
+    g           <-- 回到文档头部
+    G           <-- 去到文档尾部
+    /           <-- 搜索，在 / 后面紧跟需要搜索的字符串，按Enter开始搜索
+    q           <-- 退出
+    h           <-- 显示命令的帮助信息
