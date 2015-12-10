@@ -18,7 +18,7 @@
 int main(int argc, char **argv)
 {
     char *prompt = "Enter something: ";
-    char *errmsg = "Need more characters."; 
+    char *errmsg = "Need more characters.";
     unsigned char buf[1024];
     char in[1];
     int i = 0;

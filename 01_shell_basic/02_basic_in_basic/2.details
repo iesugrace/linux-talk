@@ -159,7 +159,7 @@ remove directory, 删除空的目录。
 [root@rhel6 ~]# rmdir /tmp/d3/d4        <-- d4 下面还有一个目录d5，属于非空，所以不能删除
 rmdir: failed to remove `/tmp/d3/d4': Directory not empty
 [root@rhel6 ~]# rmdir /tmp/d3/d4/d5     <-- d5 是空的，可以删除
-[root@rhel6 ~]# 
+[root@rhel6 ~]#
 
 删除非空目录使用下面的命令
 rm -rf d1                <-- 删除目录 d1 及里面的所有内容
@@ -176,7 +176,7 @@ df
 disk space usage of file system, 文件系统的空间使用状况
 
 列出所有已掛载的文件系统的空间使用状况
-[root@rhel6 ~]# df 
+[root@rhel6 ~]# df
 Filesystem           1K-blocks      Used Available Use% Mounted on
 /dev/sda1              7224824    933124   5924700  14% /
 tmpfs                   251284      4524    246760   2% /dev/shm
@@ -302,14 +302,14 @@ concatinate，把文件的内容按顺序连接起来，输出到标準输出。
 head
 读取文件的头部
     head -n 3 /etc/passwd               <-- 读取文件/etc/passwd 的前面三行
-    head -c 3 /etc/passwd               <-- 读取文件/etc/passwd 的前面三个字节 
+    head -c 3 /etc/passwd               <-- 读取文件/etc/passwd 的前面三个字节
     head -c 10m /dev/zero > f1          <-- 创建一个10M的文件
 
 
 tail
 读取文件的尾部
     tail -n 3 /etc/passwd               <-- 读取文件/etc/passwd 的后面三行
-    tail -c 3 /etc/passwd               <-- 读取文件/etc/passwd 的后面三个字节 
+    tail -c 3 /etc/passwd               <-- 读取文件/etc/passwd 的后面三个字节
     tail -n +28 /etc/passwd             <-- 读取文件中从第28行开始直到结尾的所有行
     tail -f /etc/passwd                 <-- 跟踪文件尾部内容的变化，常用来观察日志文件的变化，非常实用
 

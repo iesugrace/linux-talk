@@ -82,7 +82,7 @@ sleep   14312  czl    2w   REG  253,3        0  110 /tmp/good
 [czl@mob ~]$ gcc io.c
 
 2. 运行程序
-[czl@mob ~]$ ./a.out 
+[czl@mob ~]$ ./a.out
 Enter something: 123    <-- 输入三个字符
 123                     <-- 程序输出刚刚输入的字符
 Need more characters.   <-- 字符不足10个，所以有错误信息输出
@@ -146,7 +146,7 @@ login shell                 <-- 有变量v，说明是登录shell
 
 3. 运行命令 su - <当前用户名>
 [czl@mob ~]$ su - czl       <-- czl 是一个用户名，请按各自情况修改
-Password: 
+Password:
 [czl@mob ~]$ echo $v
 login shell                 <-- 有变量v，说明是登录shell
 
@@ -228,7 +228,7 @@ declare -r TMOUT=60             <-- 在最后添加这条命令即可
 九、验证重定向发生的时机
 
 1. 文件file 的内容如下
-[czl@mob ~]$ cat file 
+[czl@mob ~]$ cat file
 12345
 abcde
 
@@ -236,7 +236,7 @@ abcde
 [czl@mob ~]$ wc -l file
 36 file
 [czl@mob ~]$ head -n5 file > file
-[czl@mob ~]$ wc -l file 
+[czl@mob ~]$ wc -l file
 0 file                      <-- 文件file 变为空，和预期的不一样。
 
 原因：shell 执行命令之前，会先执行重定向操作，在上面的命令中，就是 > file，这个重定向操作会把文件file 的内容清空。当重定向操作把file 文件清空之后，再head 该文件，也只能得到空了。
@@ -294,7 +294,7 @@ fi
 
 
 十二、 验证别名、函数、内部命令、外部命令的优先级别
-1. 创建一个命令别名 pwd 
+1. 创建一个命令别名 pwd
 alias pwd='echo it is an alias'
 
 2. 创建一个名为 pwd 的函数
@@ -302,8 +302,8 @@ function pwd() { echo "this is a function"; }
 
 3. 运行命令 pwd，查看输出
 4. 删除别名，再次运行命令 pwd，查看输出
-   unalias pwd 
+   unalias pwd
 5. 删除函数，再次运行命令 pwd，查看输出
-   unset pwd 
-6. 以路径的方式运行外部命令 pwd 
+   unset pwd
+6. 以路径的方式运行外部命令 pwd
    /bin/pwd

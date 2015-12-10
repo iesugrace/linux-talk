@@ -114,7 +114,7 @@ Linux 程序有三个标准的输入输出，分别是：
 [czl@mob ~]$ passwd
 Changing password for user czl.
 Changing password for czl.
-(current) UNIX password: 
+(current) UNIX password:
 
 命令 echo 把结果输出到标准输出，所以可以在屏幕上看到结果
 [czl@mob ~]$ echo hello world
@@ -124,7 +124,7 @@ hello world
 普通用户没有权限查看/root 目录，所以出错，于是ls 把错误信息输出到标准错误，也就是屏幕
 [czl@mob ~]$ ls /root
 ls: cannot open directory /root: Permission denied
-[czl@mob ~]$ 
+[czl@mob ~]$
 
 
 用户可以根据需要，把默认的输入输出的方向进行修改，这叫做重定向。
@@ -207,7 +207,7 @@ daemon:x:2:2:daemon:/sbin:/sbin/nologin
 cat 命令的标准输出作为 head 命令的标准输入，head 命令的标准输出作为 tail 命令的标准输入
 [czl@mob ~]$ cat /etc/passwd | head -n 3 | tail -n 1
 daemon:x:2:2:daemon:/sbin:/sbin/nologin
-[czl@mob ~]$ 
+[czl@mob ~]$
 
 
 
@@ -224,8 +224,8 @@ ssh 命令是用于远程登录的程序，它读取用户输入的密码时，�
 
 
 命令历史
-set -o history      <-- 启用命令历史功能 
-set +o history      <-- 关闭命令历史功能 
+set -o history      <-- 启用命令历史功能
+set +o history      <-- 关闭命令历史功能
 history             <-- 显示命令的历史
 
 Bash shell 的命令历史默认记录在文件 ~/.bash_history 中
@@ -247,13 +247,13 @@ HISTTIMEFORMAT='[%Y-%m-%d %H:%M:%S] '           #<-- 命令历史的时间戳格
 环境变量可以被子进程访问。
 
 查看当前的环境变量
-[czl@lab ~]$ env 
+[czl@lab ~]$ env
 ORBIT_SOCKETDIR=/tmp/orbit-czl
 HOSTNAME=lab.net
 IMSETTINGS_INTEGRATE_DESKTOP=yes
 TERM=xterm
 SHELL=/bin/bash
- ... 
+ ...
 
 set命令可以列出更多信息
 [czl@lab ~]$ set
